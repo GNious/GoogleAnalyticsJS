@@ -10,6 +10,8 @@ Parameter Reference Guide - https://developers.google.com/analytics/devguides/co
 Protocol Policy - https://developers.google.com/analytics/devguides/collection/protocol/policy
 ***************************************************************************************************/
 
+var debug = 0;
+
 var analyticsVersion = 1;
 var propertyID = "";
 //var trackingID ="";
@@ -51,69 +53,11 @@ function registerAdditionSettings( parameter, value )
 	if(parameter == "screenres")
 		deviceScreen = value;
 }
-function screenview2( screenName, other)
-{
-	if( propertyID === undefined || clientID === undefined || appName === undefined )
-		return FALSE;
-	if(appVersion === undefined)
-		appVersion = "0.1a";
-
-	var http = new XMLHttpRequest();
-	var url = "https://ssl.google-analytics.com/collect";
-	var params =	"v=1" +
-					"&tid=" + propertyID +
-					"&cid=" + clientID +
-					"&t=screenview" +
-					"&an=" + appName +
-					"&av=" + appVersion;
-
-	if(screenName != undefined)
-		params = params + "&cd="+screenName;
-	if(appID != undefined)
-		params = params + "&aid="+appID;
-//	if(appotherID != undefined)
-//		params = params + "&"+other;
-
-//	if(appotherID != undefined)
-//		params = params + "&"+other;
-
-
-	http.open("POST", url, true);
-
-	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	http.setRequestHeader("Content-length", params.length);
-	http.setRequestHeader("Connection", "close");
-
-	http.onreadystatechange = function() {//Call a function when the state changes.
-		if(http.readyState == 4 && http.status == 200) {
-			//alert(http.responseText);
-			console.log("Analytics replied: state="+http.readyState+" - status="+http.statusText+"("+http.status+")");
-		}
-	}
-
-
-	console.log("Analytics prepped: "+url+"?"+params);
-	console.log(http.toString());
-	http.send(params);
-	console.log("Analytics sent ");
-}
-
-
 function appstart( )
 {
-	//if( propertyID === undefined || clientID === undefined || appName === undefined )
 	if(!isInitialized())
 		return FALSE;
 
-	/*if(appVersion === undefined)
-		appVersion = "0.1a";
-
-	/*var params =	"v=1" +
-					"&tid=" + propertyID +
-					"&cid=" + clientID +
-					"&t=screenview" +
-					"&an=" + appName +
-					"&av=" + appVersion + */
 	var params =	"&sc=start";
 
 
@@ -121,19 +65,9 @@ function appstart( )
 }
 function appstop( )
 {
-	//if( propertyID === undefined || clientID === undefined || appName === undefined )
 	if(!isInitialized())
 		return FALSE;
 
-	/*if(appVersion === undefined)
-		appVersion = "0.1a";
-
-	/*var params =	"v=1" +
-					"&tid=" + propertyID +
-					"&cid=" + clientID +
-					"&t=screenview" +
-					"&an=" + appName +
-					"&av=" + appVersion + */
 	var params =	"&sc=end";
 
 
@@ -142,27 +76,17 @@ function appstop( )
 
 function screenview( screenName, other)
 {
-	//if( propertyID === undefined || clientID === undefined || appName === undefined )
 	if(!isInitialized())
 		return FALSE;
 
-	/*if(appVersion === undefined)
-		appVersion = "0.1a";
-
-	/*var params =	"v=1" +
-					"&tid=" + propertyID +
-					"&cid=" + clientID +
-					"&t=screenview" +
-					"&an=" + appName +
-					"&av=" + appVersion;*/
 
 	var params = "&t=screenview"				// Type
 
 
 	if(screenName != undefined)
 		params = params + "&cd="+screenName;
-//	if(appotherID != undefined)
-//		params = params + "&"+other;
+	if(other != undefined)
+		params = params + "&"+other;
 
 //	if(appotherID != undefined)
 //		params = params + "&"+other;
@@ -197,14 +121,18 @@ function callGoogleAnalytics( params )
 	{
 		if(http.readyState == 4 && http.status == 200)								// If success
 		{
-			console.log("Analytics replied: state="+http.readyState+" - status="+http.statusText+"("+http.status+")");
+			if(debug)
+				console.log("Analytics replied: state="+http.readyState+" - status="+http.statusText+"("+http.status+")");
 		}
 	}
 
-	console.log("Analytics prepped: "+url+"?"+params);								// Log the call (in GET format) for debuggin'
+	if(debug)
+		console.log("Analytics prepped: "+url+"?"+params);							// Log the call (in GET format) for debuggin'
 	http.send(params);																// Make the call
-	console.log("Analytics sent ");													// Debug
+	if(debug)
+		console.log("Analytics sent ");												// Debug
 }
+
 function isInitialized()
 {
 	return !(propertyID === undefined || clientID === undefined || appName === undefined);
