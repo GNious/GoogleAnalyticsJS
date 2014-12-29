@@ -3,20 +3,21 @@ GoogleAnalyticsJS
 
 <p>3rd-party Javascript Library for sending events to <strong>Google Analytics</strong> from <strong>QML/QtQuick</strong>-based applications.</p>
 
-<p>This is designed and implemented for the purpose of including in QML/QtQuick applications, but should be fully usable in other scenarios.</p>
+<p>This is designed and implemented for the purpose of inclusion into QML/QtQuick applications, but should be fully usable in other scenarios.</p>
 
-<p>Requires a <em>Property-ID</em> (or <em>Tracking-ID</em>) from Google Analytics. Without this, you cannot track events. Register for a Property-ID on Google Analytics website.</p>
+<p>Requires a <em>Property-ID</em> (or <em>Tracking-ID</em>) from Google Analytics. Without this, you cannot track events. Register for a Property-ID on the Google Analytics website: http://www.google.com/analytics/</p>
 
 <p>An anonymous <em>Client/Device ID</em> is used to track events across multiple runs on a single device, but is not stored by the Library. Applications have to generate an ID on the first run, and store it for later access. The Library itself has no way to use the same Client ID across multiple applications, or across multiple devices.<br/>
-Note: Google requires the Client ID to be anonymous, and not able to identify e.g. a specific user or device. Do NOT use IMAC or similar as Client ID.</p>
+Note: Google requires the Client ID to be anonymous, and not able to identify e.g. a specific user or device. Do NOT use MAC, IMEI or similar as Client ID.</p>
 
+<p>All calls are asynchronous, and there is currently no way to know whether they succeeded (by design).</p>
 
 ========
 
-Measurement Protocol Overview - https://developers.google.com/analytics/devguides/collection/protocol/v1/
-Developer Guide - https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide
-Parameter Reference Guide - https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters
-Protocol Policy - https://developers.google.com/analytics/devguides/collection/protocol/policy
+Measurement Protocol Overview - https://developers.google.com/analytics/devguides/collection/protocol/v1/<br/>
+Developer Guide - https://developers.google.com/analytics/devguides/collection/protocol/v1/devguide<br/>
+Parameter Reference Guide - https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters<br/>
+Protocol Policy - https://developers.google.com/analytics/devguides/collection/protocol/policy<br/>
 
 ========
 
@@ -49,7 +50,7 @@ Sends event to Google Analytics signalling that the application is stopping. <br
 <p><pre>function screenview( screenName, other)</pre>
 Sends event that a new Screen/UI is being shown.<br/>
 Recommended to include ScreenName, but not required.<br/> 
-Can include Other options, based on the Google Analytics api paramenters, in the form of <paramter>=<value> pairs, separated by "&" (Ampersand)<br/>
+Can include Other options, based on the Google Analytics api paramenters, in the form of key=value pairs, separated by "&" (Ampersand)<br/>
 <em>Optional</em></p>
 
 
