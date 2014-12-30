@@ -54,6 +54,25 @@ Can include Other options, based on the Google Analytics api paramenters, in the
 <em>Optional</em></p>
 
 
+<p><pre>function event( action, category, value, label)</pre>
+Sends generic event, including identifies.<br/>
+Recommended to include at least Action, but all values are optional.<br/> 
+Action - name of event, up-to 500 chars<br/>
+Category - category of event, up-to 150 chars<br/>
+Label - label to be attached to event, up-to 500 chars<br/>
+Value - numeric, positive integer value
+<em>Optional</em></p>
+
+
+<p><pre>function exception( exceptiondescription, fatal)</pre>
+Register that an exception has occured<br/>
+Recommended to include at least ExceptionDescription, but all values are optional.<br/> 
+ExceptionDescription - Description of exception, up-to 150 chars<br/>
+Fatal - Whether exception was fatal (1) or not (0)<br/>
+<em>Optional</em></p>
+
+
+
 <p><pre>function callGoogleAnalytics( params )</pre>
 Internal function for sending event-data to Google Analytics.<br/>
 <em>Should not be called directly by applications</em></p>

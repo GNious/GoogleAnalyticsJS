@@ -79,9 +79,7 @@ function screenview( screenName, other)
 	if(!isInitialized())
 		return FALSE;
 
-
 	var params = "&t=screenview"				// Type
-
 
 	if(screenName != undefined)
 		params = params + "&cd="+screenName;
@@ -90,6 +88,49 @@ function screenview( screenName, other)
 
 //	if(appotherID != undefined)
 //		params = params + "&"+other;
+
+	callGoogleAnalytics( params );
+}
+
+function event( action, category, value, label)
+{
+	if(!isInitialized())
+		return FALSE;
+
+	var params = "&t=event"				// Type
+
+	if(action != undefined)
+		params = params + "&ea="+action;
+	if(category != undefined)
+		params = params + "&ec="+category;
+	if(value != undefined)
+	{
+		if(isInt(value))
+		{
+			if(value > 0)
+				params = params + "&ev="+value;
+		}
+	}
+	if(label != undefined)
+		params = params + "&el="+label;
+
+	callGoogleAnalytics( params );
+}
+
+function exception( exceptiondescription, fatal)
+{
+	if(!isInitialized())
+		return FALSE;
+
+	var params = "&t=exception"				// Type
+
+	if(exceptiondescription != undefined)
+		params = params + "&exd="+exceptiondescription;
+	if(category != undefined)
+		params = params + "&exf="+fatal;
+	else
+		params = params + "&exf=0";
+	
 
 	callGoogleAnalytics( params );
 }
